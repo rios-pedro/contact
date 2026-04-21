@@ -22,4 +22,6 @@ public class ContactRequest {
 
     @Pattern(regexp = "^[FM]$", message = "Gender need to be M or F.")
     private String gender;
+
+    private boolean active;
 }

@@ -18,4 +18,6 @@ public class ContactResponse {
     private LocalDate birthDate;
     private String gender;
     private boolean active = true;
+
+
 }

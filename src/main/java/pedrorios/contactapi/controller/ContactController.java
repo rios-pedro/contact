@@ -40,4 +40,10 @@ public class ContactController {
     public ResponseEntity<ContactResponse> create(@RequestBody ContactRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
+
+    @PutMapping(value = "{id}")
+    @Operation(description = "Update a contact")
+    public ResponseEntity<ContactResponse> update(@PathVariable String id, @RequestBody ContactRequest request) {
+        return ResponseEntity.ok(service.update(id, request));
+    }
 }

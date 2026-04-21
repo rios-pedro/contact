@@ -36,6 +36,15 @@ public class ContactService {
         return toReturn(repo.save(contact));
     }
 
+    public ContactResponse update(String id, ContactRequest request) {
+        Contact contact = repo.findById(id).orElse(null);
+        contact.setName(request.getName());
+        contact.setBirthDate(request.getBirthDate());
+        contact.setGender(request.getGender());
+        contact.setActive(request.isActive());
+        return toReturn(repo.save(contact));
+    }
+
     private ContactResponse toReturn (Contact ct){
         return new ContactResponse(
                 ct.getId(),
