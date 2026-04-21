@@ -4,11 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pedrorios.contactapi.dto.ContactRequest;
 import pedrorios.contactapi.dto.ContactResponse;
 import pedrorios.contactapi.service.ContactService;
 
@@ -34,5 +33,11 @@ public class ContactController {
     @Operation(description = "Search contact by id")
     public ResponseEntity<ContactResponse> findById(@PathVariable String id) {
         return ResponseEntity.ok(service.findById(id));
+    }
+
+    @PostMapping
+    @Operation(description = "Create a new contact")
+    public ResponseEntity<ContactResponse> create(@RequestBody ContactRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 }

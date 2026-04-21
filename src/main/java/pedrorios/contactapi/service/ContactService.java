@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pedrorios.contactapi.domain.Contact;
+import pedrorios.contactapi.dto.ContactRequest;
 import pedrorios.contactapi.dto.ContactResponse;
 import pedrorios.contactapi.repository.ContactRepository;
 
@@ -25,6 +26,14 @@ public class ContactService {
     public ContactResponse findById(String id) {
         Contact contact = repo.findById(id).orElse(null);
         return toReturn(contact);
+    }
+
+    public ContactResponse create(ContactRequest request) {
+        Contact contact = new Contact();
+        contact.setName(request.getName());
+        contact.setBirthDate(request.getBirthDate());
+        contact.setGender(request.getGender());
+        return toReturn(repo.save(contact));
     }
 
     private ContactResponse toReturn (Contact ct){

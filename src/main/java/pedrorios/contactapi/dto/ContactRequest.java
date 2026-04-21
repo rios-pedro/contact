@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class ContactRequest {
     @NotBlank(message = "Request name.")
     private String name;
 
-    private String birthDate;
+    private LocalDate birthDate;
 
     @Pattern(regexp = "^[FM]$", message = "Gender need to be M or F.")
     private String gender;
