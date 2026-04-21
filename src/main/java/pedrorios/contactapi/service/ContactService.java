@@ -24,7 +24,7 @@ public class ContactService {
     }
 
     public ContactResponse findById(String id) {
-        Contact contact = repo.findById(id).orElse(null);
+        Contact contact = repo.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
         return toReturn(contact);
     }
 
@@ -37,12 +37,22 @@ public class ContactService {
     }
 
     public ContactResponse update(String id, ContactRequest request) {
-        Contact contact = repo.findById(id).orElse(null);
+        Contact contact = repo.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
         contact.setName(request.getName());
         contact.setBirthDate(request.getBirthDate());
         contact.setGender(request.getGender());
         contact.setActive(request.isActive());
         return toReturn(repo.save(contact));
+    }
+
+    public void delete(String id) {
+        try {
+            findById(id);
+        } catch (RuntimeException e) {
+
+        }
+        findById(id);
+        repo.deleteById(id);
     }
 
     private ContactResponse toReturn (Contact ct){
