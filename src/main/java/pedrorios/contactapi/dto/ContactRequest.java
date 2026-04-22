@@ -1,6 +1,7 @@
 package pedrorios.contactapi.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class ContactRequest {
     @NotBlank(message = "Request name.")
     private String name;
 
+    @NotNull(message = "Birth date is required.")
     private LocalDate birthDate;
 
     @Pattern(regexp = "^[FM]$", message = "Gender need to be M or F.")

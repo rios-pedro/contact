@@ -2,6 +2,7 @@ package pedrorios.contactapi.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,31 +25,31 @@ public class ContactController {
     private ContactService service;
 
     @GetMapping
-    @Operation(description = "Search all active contacts")
+    @Operation(summary = "Search all active contacts")
     public ResponseEntity<List<ContactResponse>> findAll() {
             return ResponseEntity.ok(service.findAll());
         }
 
     @GetMapping(value = "{id}")
-    @Operation(description = "Search contact by id")
+    @Operation(summary = "Search contact by id")
     public ResponseEntity<ContactResponse> findById(@PathVariable String id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    @Operation(description = "Create a new contact")
-    public ResponseEntity<ContactResponse> create(@RequestBody ContactRequest request) {
+    @Operation(summary = "Create a new contact")
+    public ResponseEntity<ContactResponse> create(@RequestBody @Valid ContactRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
     @PutMapping(value = "{id}")
-    @Operation(description = "Update a contact")
-    public ResponseEntity<ContactResponse> update(@PathVariable String id, @RequestBody ContactRequest request) {
+    @Operation(summary = "Update contact")
+    public ResponseEntity<ContactResponse> update(@PathVariable String id, @RequestBody @Valid ContactRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping(value = "{id}")
-    @Operation(description = "Update a contact")
+    @Operation(summary = "delete contact")
         public ResponseEntity<Void> delete(@PathVariable String id) {
         service.delete(id);
         return ResponseEntity.noContent().build();

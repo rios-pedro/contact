@@ -2,12 +2,15 @@ package pedrorios.contactapi.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import pedrorios.contactapi.domain.Contact;
 import pedrorios.contactapi.dto.ContactRequest;
 import pedrorios.contactapi.dto.ContactResponse;
 import pedrorios.contactapi.repository.ContactRepository;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -29,6 +32,13 @@ public class ContactService {
     }
 
     public ContactResponse create(ContactRequest request) {
+
+        long age = ChronoUnit.YEARS.between(request.getBirthDate(), LocalDate.now());
+
+        if (age < 18) {
+            throw new RuntimeException("Contato deve ter 18 anos ou mais");
+        }
+
         Contact contact = new Contact();
         contact.setName(request.getName());
         contact.setBirthDate(request.getBirthDate());
@@ -46,13 +56,9 @@ public class ContactService {
     }
 
     public void delete(String id) {
-        try {
-            findById(id);
-        } catch (RuntimeException e) {
-
-        }
-        findById(id);
-        repo.deleteById(id);
+        Contact contact = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Contact not found"));
+        repo.delete(contact);
     }
 
     private ContactResponse toReturn (Contact ct){
