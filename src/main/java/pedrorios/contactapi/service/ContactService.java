@@ -36,7 +36,7 @@ public class ContactService {
         long age = ChronoUnit.YEARS.between(request.getBirthDate(), LocalDate.now());
 
         if (age < 18) {
-            throw new RuntimeException("Contato deve ter 18 anos ou mais");
+            throw new RuntimeException("Contact age is less than 18");
         }
 
         Contact contact = new Contact();
