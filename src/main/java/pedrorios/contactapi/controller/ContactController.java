@@ -15,7 +15,7 @@ import pedrorios.contactapi.service.ContactService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://contact-spring-api.vercel.app/")
+@CrossOrigin(origins = "{https://contact-spring-api.vercel.app/}")
 @RestController
 @RequestMapping("/contacts")
 @RequiredArgsConstructor
